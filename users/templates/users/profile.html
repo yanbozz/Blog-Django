@@ -1,0 +1,140 @@
+{% extends "blog/base.html" %}
+<!-- LOADING CRISPY FORMS-->
+{% load crispy_forms_tags %}
+{% block javascript %}
+  <script>
+    $(function () {
+
+      /* SCRIPT TO OPEN THE MODAL WITH THE PREVIEW */
+      $("#id_photo").change(function () {
+        if (this.files && this.files[0]) {
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            $("#image").attr("src", e.target.result);
+            $("#modalCrop").modal("show");
+          }
+          reader.readAsDataURL(this.files[0]);
+        }
+      });
+
+      /* SCRIPTS TO HANDLE THE CROPPER BOX */
+      var $image = $("#image");
+      var cropBoxData;
+      var canvasData;
+      $("#modalCrop").on("shown.bs.modal", function () {
+        $image.cropper({
+          viewMode: 3,
+          aspectRatio: 1/1,
+          moveable: false,
+          zoomable: true,
+          rotatable: true,
+          scalable: true,
+          autoCropArea: 1,
+          minCropBoxWidth:200,
+          minCropBoxHeight:200,
+          checkOrientation:false,
+          ready: function () {
+            $image.cropper("setCanvasData", canvasData);
+            $image.cropper("setCropBoxData", cropBoxData);
+          }
+        });
+      }).on("hidden.bs.modal", function () {
+        cropBoxData = $image.cropper("getCropBoxData");
+        canvasData = $image.cropper("getCanvasData");
+        $image.cropper("destroy");
+      });
+
+      $(".js-move-left").click(function () {
+        $image.cropper("move", 20, 0);
+      });
+
+      $(".js-move-right").click(function () {
+        $image.cropper("move", -20, 0);
+      });
+
+      $(".js-move-up").click(function () {
+        $image.cropper("move", 0, 20);
+      });
+
+      $(".js-move-down").click(function () {
+        $image.cropper("move", 0, -20);
+      });
+
+      $(".js-rotate").click(function () {
+        $image.cropper("rotate", 90);
+      });
+
+
+
+      /* SCRIPT TO COLLECT THE DATA AND POST TO THE SERVER */
+      $(".js-crop-and-upload").click(function () {
+        var cropData = $image.cropper("getData");
+        $("#id_rotate").val(cropData["rotate"]);
+        $("#id_x").val(cropData["x"]);
+        $("#id_y").val(cropData["y"]);
+        $("#id_height").val(cropData["height"]);
+        $("#id_width").val(cropData["width"]);
+        $("#modalCrop").modal("hide");
+      });
+    });
+  </script>
+{% endblock %}
+{% block content %}
+  <!--username is built in django, does not need to import -->
+  <div class="content-section">
+    <div class="media">
+      <img class="account-img rounded-circle" src="{{ user.profile.photo.url }}">
+      <div class="media-body">
+        <h2 class="account-heading">{{ user.username }}</h2>
+        <p class="text-secondary">{{ user.email }}</p>
+      </div>
+    </div>
+    <!-- FORM HERE -->
+    <form method="post" enctype="multipart/form-data", id = "formUpload">
+      {% csrf_token %}
+      <fieldset class="form-group">
+        <legend class="border-bottom mb-4">Profile Info</legend>
+        {{ u_form|crispy }}
+        {{ p_form|crispy }}
+      </fieldset>
+      <div class="form-group">
+        <button class="btn btn-outline-info" type="submit">Update</button>
+      </div>
+    </form>
+  </div>
+  <!-- MODAL TO CROP THE IMAGE -->
+  <div class="modal fade" id="modalCrop">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Crop the photo</h4>
+        </div>
+        <div class="img-container">
+          <img src=""id="image" style="max-width:100%;">
+        </div>
+        <div class="modal-footer">
+          <div class="btn-group pull-left" role="group">
+            <button type="button" class="btn btn-default js-move-left">
+              <span class="glyphicon glyphicon-arrow-left"></span>
+            </button>
+            <button type="button" class="btn btn-default js-move-right">
+              <span class="glyphicon glyphicon-arrow-right"></span>
+            </button>
+            <button type="button" class="btn btn-default js-move-up">
+              <span class="glyphicon glyphicon-arrow-up"></span>
+            </button>
+            <button type="button" class="btn btn-default js-move-down">
+              <span class="glyphicon glyphicon-arrow-down"></span>
+            </button>
+            <button type="button" class="btn btn-default js-rotate">
+              <span class="glyphicon glyphicon-repeat"></span>
+            </button>
+          </div>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Nevermind</button>
+          <button type="button" class="btn btn-primary js-crop-and-upload">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}
