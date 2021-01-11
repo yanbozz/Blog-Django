@@ -1,4 +1,5 @@
-from django.urls import path
+from django.urls import path, include
+from django.conf.urls import url, include
 from .views import (
     PostListView,
     PostDetailView,
@@ -9,6 +10,8 @@ from .views import (
     AboutView,
 )
 from . import views
+from django.conf.urls.static import static
+from django.conf import settings
 
 
 urlpatterns = [
@@ -19,7 +22,8 @@ urlpatterns = [
     path('post/<int:pk>/update/', PostUpdateView.as_view(), name='post-update'),
     path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete'),
     path('about/', AboutView.as_view(), name='blog-about'),
-]
+    url(r'', include('comments.urls', namespace='comment'))
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 
 # <app>/<model>_<viewtype>.html

@@ -1,0 +1,22 @@
+<div class="comment-cell" id="div-comment-{{ comment.pk }}" >
+  <div class="comment-body" style="display: table-cell">
+    <div class="comment-img">
+      <img class="rounded-circle user-img-small" src="{{ comment.author.profile.photo.url }}"/>
+    </div>
+    <div class="comment-content">
+      <div class="comment-meta">
+        <a class="mr-2" href="{% url 'user-posts' comment.author.username %}">{{ comment.author.username }}</a>
+        <small class="text-muted">{{ comment.created|date:"F d, Y" }}</small>
+      </div>
+      <p>
+        {{ comment.body }}
+      </p>
+      <a style="color:#777" href="javscript:void(0)" onclick="openForm({{ comment.pk }}); autosize({{ comment.pk }})">reply</a>
+      <p></p>
+      {% include "comments/public_reply.html" %}
+    </div>
+  </div>
+  {% for reply in comment.root_comment.all %}
+    {% include "comments/reply_list.html" %}
+  {% endfor %}
+</div>

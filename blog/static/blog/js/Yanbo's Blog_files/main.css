@@ -1,0 +1,178 @@
+body {
+  background: #fafafa;
+  color: #333333;
+  margin-top: 5rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #444444;
+}
+
+ul {
+  margin: 0;
+}
+
+.bg-steel {
+  background-color: #5f788a;
+}
+
+.site-header .navbar-nav .nav-link {
+  color: #cbd5db;
+}
+
+.site-header .navbar-nav .nav-link:hover {
+  color: #ffffff;
+}
+
+.site-header .navbar-nav .nav-link.active {
+  font-weight: 500;
+}
+
+.content-section {
+  background: #ffffff;
+  border-radius: 3px;
+  margin-bottom: 10px;
+}
+
+.article-title {
+  color: #444444;
+}
+
+.article-title:hover {
+  r color: #428bca;
+  text-decoration: none;
+}
+
+.article-content {
+  white-space: pre-line;
+}
+
+.article-img {
+  height: 65px;
+  width: 65px;
+  margin-right: 16px;
+  float: left
+}
+
+.article-metadata {
+  padding-bottom: 1px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid #e3e3e3
+}
+
+.article-metadata a:hover {
+  color: #333;
+  text-decoration: none;
+}
+
+.article-svg {
+  width: 25px;
+  height: 25px;
+  vertical-align: middle;
+}
+
+.account-img {
+  height: 125px;
+  width: 125px;
+  margin-right: 20px;
+  margin-bottom: 16px;
+}
+
+div.account-heading {
+  font-size: 2.5rem;
+}
+
+div.comment-container {
+  background: #ffffff;
+  padding: 10px 20px;
+  border: 1px solid #dddddd;
+  border-radius: 3px;
+  margin-bottom: 20px;
+}
+
+div.article-link {
+  margin-top: 40px;
+}
+
+div.comment-area {
+  margin-top: 2em;
+}
+
+h3.comment-area-title {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 0.4em
+}
+
+div.author-date {
+  display: inline;
+  margin-bottom: 20px;
+}
+
+/* detail page features */
+.user-img-small {
+  height: 40px;
+  width: 40px;
+  margin-right: 5px;
+}
+
+.article-detail-title {
+  color: #444444;
+  margin-top: 20px;
+  margin-bottom: 20px
+}
+
+.article-detail-metadata {
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #e3e3e3
+}
+
+div.article-detail-content {
+  margin-top: 20px;
+  border-top: 1px solid #e3e3e3;
+  padding-top: 20px
+}
+
+.comment-area-title {
+  margin-bottom: 20px
+}
+
+div.reply {
+  margin-left: 3em;
+}
+
+div.comment-body {
+  display: table-row;
+  overflow: auto
+}
+
+div.comment-content {
+  display: table-cell;
+  vertical-align: top;
+  overflow-wrap: break-word;
+}
+
+div.comment-img {
+  display: table-cell
+}
+
+div.reply-body {
+  margin-left: 3em;
+  width: 100%;
+}
+
+div.reply-form {
+  display: none;
+  margin-bottom: 10px;
+  width: 30em
+}
+
+.form-popup {
+  width: 100%
+}
+
+div.comment-cell {
+  width: 100%
+}
+
+textarea.autoExpand {}

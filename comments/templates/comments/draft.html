@@ -1,0 +1,32 @@
+          <div id="div-comment-{{ comment.pk }}" >
+            <img class="rounded-circle user-img-small" src="{{ comment.author.profile.photo.url }}">
+            <div class="comment-body">
+              <div>
+                <a class="mr-2" href="{% url 'user-posts' comment.author.username %}">{{ comment.author.username }}</a>
+                <small class="text-muted">{{ comment.created|date:"F d, Y" }}</small>
+              </div>
+              <p>
+                {{ comment.body }}
+              </p>
+              <a href="javascript:reply({{ comment.pk }})" onclick="openForm()">reply</a>
+            </div>
+          　{% for reply in comment.root_comment.all %}
+              <div class="reply">
+                <img class="rounded-circle user-img-small" src="{{ reply.author.profile.photo.url }}"/>
+                <div class="comment-body">
+                  <div>
+                    <a class="mr-2" href="{% url 'user-posts' reply.author.username %}">{{ reply.author.username }}</a>
+                    <small class="text-muted">{{ reply.created|date:"F d, Y" }}</small>
+                  </div>
+                  Replying to
+                  <a class="mr-2" href="{% url 'user-posts' reply.reply_to.username %}">@{{ reply.reply_to.username }}</a>
+                  <p>
+                    {{ reply.body }}
+                  </p>
+                  <a href="javascript:reply({{ reply.pk }})" onclick="openForm().style.display='inline';">reply</a>
+                </div>
+
+              </div>
+            {% endfor %}
+
+          </div>

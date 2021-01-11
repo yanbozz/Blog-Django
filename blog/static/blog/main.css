@@ -30,18 +30,16 @@ ul {
 
 .content-section {
   background: #ffffff;
-  padding: 10px 20px;
-  border: 1px solid #dddddd;
   border-radius: 3px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .article-title {
   color: #444444;
 }
 
-a.article-title:hover {
-  color: #428bca;
+.article-title:hover {
+  r color: #428bca;
   text-decoration: none;
 }
 
@@ -52,7 +50,8 @@ a.article-title:hover {
 .article-img {
   height: 65px;
   width: 65px;
-  margin-right: 16px;
+  margin-right: 10px;
+  float: left
 }
 
 .article-metadata {
@@ -79,6 +78,112 @@ a.article-title:hover {
   margin-bottom: 16px;
 }
 
-.account-heading {
+div.account-heading {
   font-size: 2.5rem;
+}
+
+div.comment-container {
+  background: #ffffff;
+  padding: 10px 20px;
+  border: 1px solid #dddddd;
+  border-radius: 3px;
+  margin-bottom: 20px;
+}
+
+div.article-link {
+  margin-top: 2em;
+}
+
+div.comment-area {
+  margin-top: 2em;
+}
+
+h3.comment-area-title {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 0.4em
+}
+
+div.author-date {
+  display: inline;
+  margin-bottom: 20px;
+}
+
+/* detail page features */
+.user-img-small {
+  height: 40px;
+  width: 40px;
+  margin-right: 5px;
+}
+
+.article-detail-title {
+  color: #444444;
+  margin-top: 20px;
+  margin-bottom: 20px
+}
+
+.article-detail-metadata {
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #e3e3e3
+}
+
+div.article-detail-content {
+  margin-top: 20px;
+  border-top: 1px solid #e3e3e3;
+  padding-top: 20px
+}
+
+.comment-area-title {
+  margin-bottom: 20px
+}
+
+div.reply {
+  margin-left: 3em;
+}
+
+div.comment-body {
+  display: table-row;
+  overflow: auto
+}
+
+div.comment-content {
+  display: table-cell;
+  vertical-align: top;
+  overflow-wrap: break-word;
+}
+
+div.comment-img {
+  display: table-cell
+}
+
+div.reply-body {
+  margin-left: 3em;
+  width: 100%;
+}
+
+div.reply-form {
+  display: none;
+  margin-bottom: 10px;
+  width: 30em
+}
+
+.form-popup {
+  width: 100%
+}
+
+div.comment-cell {
+  width: 100%
+}
+
+textarea.autoExpand {}
+
+div.like {
+  color: #337ab7;
+  cursor: pointer;
+  display: inline-block;
+  padding: 0.5em 0.3em;
+}
+
+div.like .active {
+  color: #f22;
 }

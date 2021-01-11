@@ -1,21 +1,110 @@
 
 {% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
 {% block content %}
-  <article class="media content-section">
-    <img class ="rounded-circle artical-img" style="width:100px;height:100px;" src="{{ object.author.profile.photo.url }}">
+  <div class="media content-section">
     <div class="media-body">
-      <div class="article-metadata">
-        <a class="mr-2" href="{% url 'user-posts' object.author.username %}">{{ object.author }}</a>
-        <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
-        {% if object.author == user %}
-        <div>
-          <a class = "btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' object.id %}">Update</a>
-          <a class = "btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' object.id %}">Delete</a>
+      <h2 class="article-detail-title" href="#">{{ posts.title }}</h2>
+      <div class="article-detail-metadata">
+        <img class ="rounded-circle user-img-small" src="{{ posts.author.profile.photo.url }}">
+        <div class="author-date">
+          <a class="mr-2" href="{% url 'user-posts' posts.author.username %}">{{ posts.author.username }}</a><br />
+          <small class="text-muted">{{ posts.date_posted|date:"F d, Y" }}</small>
         </div>
-        {% endif %}
+        <div class="article-detail-content">
+          <p class="article-content">{{ posts.content }}</p>
+        </div>
       </div>
-      <h2 class="article-title" href="#">{{ object.title }}</h2>
-      <p class="article-content">{{ object.content }}</p>
+
+      {% if posts.author == user %}
+      <div style="margin-bottom: 2em">
+        <a class="text-muted" href="{% url 'post-update' object.id %}">Update</a>
+        <a class="text-muted" href="{% url 'post-delete' object.id %}">Delete</a>
+      </div>
+      {% endif %}
+      <div class="like" onclick="likeChange('blog, {{ blog.pk }}')">
+        <span class="glyphicon glyphicon-thumbs-up"></span>
+        <span class="liked-num">0 like</span>
+      </div>
+      <div class="article-link">
+        <p>Last:
+          {% if previous_blog %}
+            <a href="{{ previous_blog.get_absolute_url }}">{{ previous_blog.title }}</a>
+          {% else %}
+            this is the first blog</p>
+          {% endif %}
+        </p>
+        <p>Next:
+          {% if next_blog %}
+            <a href="{{ next_blog.get_absolute_url }}">{{ next_blog.title }}</a>
+          {% else %}
+            this is the last blog
+          {% endif %}
+        </p>
+      </div>
     </div>
-  </article>
-{% endblock content  %}
+  </div>
+  <div class="comment-area">
+    <h4 id='reply-title' class="comment-area-title">Write your comment</h4>
+    {% if user.is_authenticated %}
+      <div class='form-popup'>
+        <form action="{% url 'comments:postcomment' posts.pk %}" method="post" id="form-container">
+          {% csrf_token %}
+          <p>
+             {{ form.body|as_crispy_field }}
+             {{ form.errors }}
+          </p>
+            <input name="submit" type="submit" id="submit" class="btn btn-outline-info" value="Comment"/>
+        </form>
+      </div>
+    {% else %}
+      <a class="text-muted" href="{% url 'login' %}">Login and comment</a>
+    {% endif %}
+  </div>
+  <div class="commentlist-container">
+    <h4 class="comment-area-title">{{ comment_count }} Comments</h4>
+      {% spaceless %}
+      {% for comment in comment_list %}
+        {% include "comments/comment_list.html" %}
+      {% empty %}
+        No comments
+      {% endfor %}
+      {% endspaceless %}
+  </div>
+  <script>
+    var textarea = document.getElementById("id_body");
+    var heightLimit = 200; /* Maximum height: 200px */
+
+    textarea.oninput = function() {
+    textarea.style.height = ""; /* Reset the height*/
+    textarea.style.height = Math.min(textarea.scrollHeight, heightLimit) + "px";}
+
+    //onclick to like/unlike
+    function likeChange(obj, content_type, object_id){
+      var is_like = obj.getElementbyClassName('active').length == 0
+      $.ajax({
+        url:"{% url 'like_change' %}",
+        type: 'GET',
+        data: {
+          content_type:'content_type',
+          object_id:'object_id',
+          is_like: is_like
+
+        },
+        cache: false,
+        success: function(data){
+          console.log(data)
+
+        },
+        error: function(xhr){
+          console.log(xhr)
+
+        }
+      });
+    }
+  </script>
+
+
+
+{% endblock content %}

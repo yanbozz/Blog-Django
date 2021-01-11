@@ -1,0 +1,21 @@
+<div class="reply-body">
+  <div style="display:table-cell" class="reply-img">
+    <img class="rounded-circle user-img-small" src="{{ reply.author.profile.photo.url }}"/>
+  </div>
+
+  <div class="comment-content">
+    <div class="reply-meta">
+      <a class="mr-2" href="{% url 'user-posts' reply.author.username %}">{{ reply.author.username }}</a>
+      <small class="text-muted">{{ reply.created|date:"F d, Y" }}</small></br>
+      <small style="font-style: oblique; color: #777">Replying to </small>
+      <a class="mr-2" href="{% url 'user-posts' reply.reply_to.username %}">@{{ reply.reply_to.username }}</a>
+    </div>
+    <p>
+      {{ reply.body }}
+    </p>
+    <a style="color:#777" href="javascript:void(0)" onclick="openForm({{ reply.pk }}); autosize({{ reply.pk }})">reply</a>
+    <p></p>
+    {% include "comments/person_reply.html" %}
+  </div>
+
+</div>

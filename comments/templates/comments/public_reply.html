@@ -1,0 +1,50 @@
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+
+
+<div class="reply-form" id="replyForm-{{ comment.pk }}">
+  {% if user.is_authenticated %}
+    <div class='form-popup'>
+      <form action="{% url 'comments:postcomment' posts.pk %}" method="post" id="form-container">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <p>
+
+           {% render_field form.body id=comment.pk %}
+           {{ form.body.errors }}
+        </p>
+        {% render_field form.parent_comment_id value=comment.pk %}
+        <input name="submit" type="submit" id="submit" class="btn btn-outline-info" value="Comment"/>
+        <a style="margin-left: 2px" class="text-muted" href="javascript:void(0)" onclick="closeForm({{ comment.pk }})">cancel</a>
+      </form>
+    </div>
+  {% else %}
+    <a class="text-muted" href="{% url 'login' %}">Login and comment</a>
+  {% endif %}
+</div>
+
+
+
+<script>
+
+  function openForm(pk) {
+    var replyForm = "replyForm" + '-' + pk
+    document.getElementById(replyForm).style.display = "block";
+  }
+
+  function closeForm(pk) {
+    var replyForm = "replyForm" + '-' + pk
+    document.getElementById(replyForm).style.display = "none";
+  }
+
+  function autosize(id) {
+  var textarea = document.getElementById(id);
+  var heightLimit = 200; /* Maximum height: 200px */
+
+  textarea.oninput = function() {
+    textarea.style.height = ""; /* Reset the height*/
+    textarea.style.height = Math.min(textarea.scrollHeight, heightLimit) + "px";
+  };
+}
+
+</script>

@@ -19,6 +19,7 @@ from django.urls import path, include
 from users import views as user_views
 from django.conf import settings
 from django.conf.urls.static import static
+from django.conf.urls import url, include
 
 
 urlpatterns = [
@@ -49,7 +50,10 @@ urlpatterns = [
          ),
          name='password_reset_complete'),
     path('', include('blog.urls')),
-]
+    url(r'', include('comments.urls', namespace='comments')),
+    path('like/', include('like.urls')),
+
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 # if in debug mode, add the path
 if settings.DEBUG:

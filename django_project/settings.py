@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'users.apps.UsersConfig',
+    'comments.apps.CommentsConfig',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -40,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'widget_tweaks',
+    'like',
 
 ]
 
@@ -123,6 +125,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Media_Root: directory we let django store the uploaded file. It is on the file system not database
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
