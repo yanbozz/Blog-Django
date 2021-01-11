@@ -1,1 +1,0 @@
-export TEST_VARIABLE="zyb123456"
