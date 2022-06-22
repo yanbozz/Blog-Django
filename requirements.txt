@@ -4,7 +4,7 @@ chardet==3.0.4
 Django==2.2.2
 django-crispy-forms==1.7.2
 idna==2.8
-numpy==1.16.4
+numpy==1.22.0
 pandas==0.24.2
 Pillow==6.0.0
 pipenv==2018.11.26
